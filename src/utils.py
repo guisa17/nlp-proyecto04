@@ -29,3 +29,14 @@ def save_toy_data(train_data, val_data, path="data/toy_seq2seq.json"):
     }
     with open(path, "w") as f:
         json.dump(data, f, indent=4)
+
+
+def load_toy_data(path="data/toy_seq2seq.json"):
+    """
+    Cargamos el dataset desde un archivo JSON
+    """
+    with open(path, "r") as f:
+        data = json.load(f)
+    train_data = [(d["input"], d["target"]) for d in data["train"]]
+    val_data = [(d["input"], d["target"]) for d in data["val"]]
+    return train_data, val_data
