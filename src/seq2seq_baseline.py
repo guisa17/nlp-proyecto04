@@ -76,15 +76,13 @@ class Seq2SeqBaseline:
 
                 self.optimizer.zero_grad()
                 _, hidden = self.encoder(src_batch)
-
                 loss = 0
-                token = dec_input[:, 0]
                 
                 # Teacher forcing
                 for t in range(dec_target.size(1)):
+                    token = dec_input[:, t]
                     pred, hidden = self.decoder(token, hidden)
                     loss += self.criterion(pred, dec_target[:, t])
-                    token = dec_input[:, t]
 
                 loss.backward()
                 self.optimizer.step()
