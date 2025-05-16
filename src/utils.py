@@ -40,3 +40,33 @@ def load_toy_data(path="data/toy_seq2seq.json"):
     train_data = [(d["input"], d["target"]) for d in data["train"]]
     val_data = [(d["input"], d["target"]) for d in data["val"]]
     return train_data, val_data
+
+
+class CharTokenizer:
+    """
+    Tokenizer para el dataset de toy_seq2seq
+    """
+    def __init__(self):
+        chars    = list("0123456789+")
+        specials = ["<pad>", "<sos>", "<eos>"]
+        self.idx2char = specials + chars
+        self.char2idx = {c:i for i,c in enumerate(self.idx2char)}
+
+        self.vocab_size    = len(self.idx2char)
+        self.pad_token_id  = self.char2idx["<pad>"]
+        self.sos_token_id  = self.char2idx["<sos>"]
+        self.eos_token_id  = self.char2idx["<eos>"]
+
+
+    def encode(self, s: str) -> list[int]:
+        return [self.sos_token_id] + [self.char2idx[c] for c in s] + [self.eos_token_id]
+
+
+    def decode(self, ids: list[int]) -> str:
+        out = []
+        for i in ids:
+            c = self.idx2char[i]
+            if c in ("<pad>","<sos>","<eos>"):
+                continue
+            out.append(c)
+        return "".join(out)
