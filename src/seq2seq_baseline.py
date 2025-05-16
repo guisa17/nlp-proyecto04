@@ -7,7 +7,7 @@ from torch.utils.rnn import pad_sequence
 
 class EncoderRNN(nn.Module):
     def __init__(self, vocab_size, emb_size, hidden_size):
-        super.__init__()
+        super().__init__()
         self.embedding = nn.Embedding(vocab_size, emb_size)
         self.rnn = nn.GRU(emb_size, hidden_size, batch_first=True)
 
