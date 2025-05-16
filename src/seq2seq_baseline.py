@@ -2,7 +2,7 @@ import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.rnn import pad_sequence
+from torch.nn.utils.rnn import pad_sequence
 
 
 class EncoderRNN(nn.Module):
